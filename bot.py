@@ -57,6 +57,7 @@ def send_help(message):
 /qducc  青大CC信息
 /love  在一起
 /ip  IP 归属地
+eg: /ip 8.8.8.8
 /test  测试指令
 /help  获取指令详情
 """))
@@ -70,23 +71,13 @@ def send_pastdays(message):
                  ("❤️❤️❤️已经在一起"+PASTDAYS+"天"))
 
 
-@bot.message_handler(commands=['pic'])
-def send_pic(message):
-    pass
-
-
-@bot.message_handler(commands=['whois'])
-def send_whois(message):
-    pass
-
-
 @bot.message_handler(commands=['ip'])
 def send_ip_address(message):
-    ip = re.findall(r'(\d+.\d+.\d+.\d+)', message.text)
+    ip = re.findall(r'(\d+.\d+.\d+.\d+)', message.text)[0].encode('utf-8')
     id_adress = function.domain()
-    ret_dict = id_adress.ip_address(ip[0])
+    ret_dict = id_adress.ip_address(ip)
     bot.send_message(message.chat.id,
-                 ("IP: "+ip[0]+"\n"
+                 ("IP: "+ip+"\n"
                     +ret_dict['address']+"\n"
                     +ret_dict['geoip']))
 
