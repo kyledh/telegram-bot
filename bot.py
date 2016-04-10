@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import flask
-import personal
+import personal  # This is my personal file
+import function
+import re
 import telebot
 import logging
 
@@ -52,10 +54,11 @@ def send_welcome(message):
 def send_help(message):
     bot.send_message(message.chat.id, (
 """
-/qducc 青大CC信息
-/love 在一起
-/test 测试指令
-/help 获取指令详情
+/qducc  青大CC信息
+/love  在一起
+/ip  IP 归属地
+/test  测试指令
+/help  获取指令详情
 """))
 
 
@@ -65,6 +68,27 @@ def send_pastdays(message):
     PASTDAYS = love.pastdays()
     bot.send_message(message.chat.id,
                  ("❤️❤️❤️已经在一起"+PASTDAYS+"天"))
+
+
+@bot.message_handler(commands=['pic'])
+def send_pic(message):
+    pass
+
+
+@bot.message_handler(commands=['whois'])
+def send_whois(message):
+    pass
+
+
+@bot.message_handler(commands=['ip'])
+def send_ip_address(message):
+    ip = re.findall(r'(\d+.\d+.\d+.\d+)', message.text)
+    id_adress = function.domain()
+    ret_dict = id_adress.ip_address(ip[0])
+    bot.send_message(message.chat.id,
+                 ("IP: "+ip[0]+"\n"
+                    +ret_dict['address']+"\n"
+                    +ret_dict['geoip']))
 
 
 @bot.message_handler(commands=['qducc'])
