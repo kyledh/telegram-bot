@@ -49,9 +49,8 @@ def send_welcome(message):
 
 
 @bot.message_handler(commands=['help'])
-def send_welcome(message):
-    bot.send_message(message.chat.id,
-                 (
+def send_help(message):
+    bot.send_message(message.chat.id, (
 """
 /qducc 青大CC信息
 /love 在一起
@@ -61,7 +60,7 @@ def send_welcome(message):
 
 
 @bot.message_handler(commands=['love'])
-def send_love(message):
+def send_pastdays(message):
     love = personal.love()
     PASTDAYS = love.pastdays()
     bot.send_message(message.chat.id,
@@ -72,7 +71,7 @@ def send_love(message):
 def send_qducc(message):
     qducc = personal.qducc()
     ret_dict = qducc.qducc_user_info()
-    bot.reply_to(message,
+    bot.send_message(message.chat.id,
                  ("注册用户数: "+ret_dict['user_count']+"\n"
                     +"激活用户数: "+ret_dict['user_activate_count']+"\n"
                     +"今日活跃用户数: "+ret_dict['user_request_count']+"\n"))
@@ -86,7 +85,7 @@ def send_test(message):
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
-    bot.reply_to(message, message.text)
+    bot.send_message(message.chat.id, message.text)
 
 
 bot.remove_webhook()
