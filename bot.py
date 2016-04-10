@@ -56,7 +56,7 @@ def send_help(message):
 """
 /qducc  青大CC信息
 /love  在一起
-/ip  IP 归属地
+/ip  IP DOMAIN 归属地
 eg: /ip 8.8.8.8
 /test  测试指令
 /help  获取指令详情
@@ -73,7 +73,11 @@ def send_pastdays(message):
 
 @bot.message_handler(commands=['ip'])
 def send_ip_address(message):
-    ip = re.findall(r'(\d+.\d+.\d+.\d+)', message.text)[0].encode('utf-8')
+    ip = re.findall(r'@(.*)', message.text)
+    if not ip:
+        bot.send_message(message.chat.id, ("输入错误，无法识别"))
+    else:
+        ip = ip[0].encode('utf-8')
     id_adress = function.domain()
     ret_dict = id_adress.ip_address(ip)
     bot.send_message(message.chat.id,
