@@ -11,20 +11,15 @@ import json
 
 CONFIG = json.load(open('config.json'))
 
-API_TOKEN = str(CONFIG['api_token'])
-BOT_NAME = str(CONFIG['bot_name'])
+BOT_NAME = CONFIG['bot_name']
 
-WEBHOOK_HOST = str(CONFIG['webhook_host'])
-WEBHOOK_PORT = CONFIG['webhook_port']
-WEBHOOK_LISTEN = '0.0.0.0'
-
-WEBHOOK_URL_BASE = "https://%s" % (WEBHOOK_HOST)
-WEBHOOK_URL_PATH = "/%s/" % (API_TOKEN)
+WEBHOOK_URL_BASE = "https://%s" % (CONFIG["webhook_host"])
+WEBHOOK_URL_PATH = "/%s/" % (CONFIG["api_token"])
 
 logger = telebot.logger
 telebot.logger.setLevel(logging.INFO)
 
-bot = telebot.TeleBot(API_TOKEN)
+bot = telebot.TeleBot(CONFIG["api_token"])
 
 app = flask.Flask(__name__)
 
@@ -131,6 +126,6 @@ bot.remove_webhook()
 
 bot.set_webhook(url=WEBHOOK_URL_BASE+WEBHOOK_URL_PATH)
 
-app.run(host=WEBHOOK_LISTEN,
-        port=WEBHOOK_PORT,
+app.run(host=CONFIG["webhook_listen"],
+        port=CONFIG["webhook_port"],
         debug=True)
