@@ -110,9 +110,11 @@ def send_qducc(message):
 
 @bot.message_handler(commands=['tts'])
 def tts(message):
-    text = message.text.split(' ')[1]
+    str = message.text.split(' ')[1]
+    lan = str.split('-')[0]
+    text = str.split('-')[1]
     url = 'http://tts.baidu.com/text2audio'
-    params = {'lan': 'zh','ie': 'UTF-8','text': text,}
+    params = {'lan': lan, 'ie': 'UTF-8', 'text': text}
     file = download(url,params=params)
     bot.send_voice(message.chat.id, file)
 
