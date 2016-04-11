@@ -51,15 +51,16 @@ def send_welcome(message):
 def send_help(message):
     bot.send_message(message.chat.id, (
 """
-/qducc  青大CC信息
-/love  在一起
-/ip  IP 归属地
+/qducc  QDUCC user info
+/love  ❤
+/ip  Inquiry IP address
 eg: /ip 8.8.8.8
-/qr 链接二维码
+/qr  Links to QR code
 eg: /qr g.cn
-/cat 猫图
-/test  测试指令
-/help  获取指令详情
+/cat  Cat pictures
+/tts  Text to Speech
+/test  Test
+/help  Help
 """))
 
 
@@ -109,6 +110,15 @@ def send_qducc(message):
                  ("注册用户数: "+ret_dict['user_count']+"\n"
                     +"激活用户数: "+ret_dict['user_activate_count']+"\n"
                     +"今日活跃用户数: "+ret_dict['user_request_count']+"\n"))
+
+
+@bot.message_handler(commands=['tts'])
+def tts(message):
+    text = message.text.split(' ')[1]
+    url = 'http://tts.baidu.com/text2audio'
+    params = {'lan': 'zh','ie': 'UTF-8','text': text,}
+    file = download(url,params=params)
+    bot.send_voice(message.chat.id,file)
 
 
 @bot.message_handler(commands=['test'])
