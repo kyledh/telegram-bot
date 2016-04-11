@@ -5,7 +5,6 @@ import magic
 import tempfile
 import re
 import urllib2
-import re
 import mimetypes
 
 

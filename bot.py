@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import flask
-import personal# This is my personal file
+import personal  # This is my personal file
 from utils import *
 import telebot
 import logging
@@ -11,10 +11,10 @@ import json
 
 CONFIG = json.load(open('config.json'))
 
-API_TOKEN = CONFIG['api_token']
-BOT_NAME = CONFIG['@bot_name']
+API_TOKEN = str(CONFIG['api_token'])
+BOT_NAME = str(CONFIG['bot_name'])
 
-WEBHOOK_HOST = CONFIG['webhook_host']
+WEBHOOK_HOST = str(CONFIG['webhook_host'])
 WEBHOOK_PORT = CONFIG['webhook_port']
 WEBHOOK_LISTEN = '0.0.0.0'
 
@@ -59,7 +59,10 @@ def send_help(message):
 /qducc  青大CC信息
 /love  在一起
 /ip  IP 归属地
-eg: /ip @8.8.8.8
+eg: /ip 8.8.8.8
+/qr 链接二维码
+eg: /qr g.cn
+/cat 猫图
 /test  测试指令
 /help  获取指令详情
 """))
