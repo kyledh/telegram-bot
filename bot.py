@@ -51,17 +51,18 @@ def send_welcome(message):
 def send_help(message):
     bot.send_message(message.chat.id, (
 """
-/qducc  QDUCC user info
-/love  ❤
-/ip  Inquiry IP address
+- /qducc  QDUCC 用户信息
+- /love  ❤
+- /ip  查新 IP 地址
+- /cat  猫
+- /webshot  网页截图
 eg: /ip 8.8.8.8
-/qr  Links to QR code
+- /qr 链接转二维码
 eg: /qr g.cn
-/cat  Cat pictures
-/tts  Text to Speech
-/test  Test
-/help  Help
-"""))
+- /tts 文字转语音
+eg: /tts 你好
+- /help  查看指令
+"""),  parse_mode="Markdown")
 
 
 @bot.message_handler(commands=['love'])
@@ -85,11 +86,6 @@ def qr(message):
     url = 'https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=' + text
     file = download(url, type='qr')
     bot.send_photo(message.chat.id, file)
-
-
-@bot.message_handler(commands=['whois'])
-def send_whois(message):
-    pass
 
 
 @bot.message_handler(commands=['ip'])
@@ -118,13 +114,15 @@ def tts(message):
     url = 'http://tts.baidu.com/text2audio'
     params = {'lan': 'zh','ie': 'UTF-8','text': text,}
     file = download(url,params=params)
-    bot.send_voice(message.chat.id,file)
+    bot.send_voice(message.chat.id, file)
 
 
-@bot.message_handler(commands=['test'])
-def send_test(message):
-    bot.send_message(message.chat.id,
-                 ('❤️'))
+@bot.message_handler(commands=['webshot'])
+def webshot(message):
+    text = message.text.split(' ')[1]
+    url = 'http://api.screenshotmachine.com/?key=b645b8&size=X&url=' + text + '&format=png'
+    file = download(url)
+    bot.send_photo(message.chat.id, file) 
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
