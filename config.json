@@ -1,0 +1,6 @@
+{
+    "api_token": "<api_token>",
+    "bot_name": "@<bot username>",
+    "webhook_host": "<ip/host where the bot is running>",
+    "webhook_port": 8433
+}

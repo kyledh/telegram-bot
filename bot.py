@@ -2,18 +2,20 @@
 # -*- coding: utf-8 -*-
 
 import flask
-import personal  # This is my personal file
-import function
-import re
+import personal# This is my personal file
+from utils import *
 import telebot
 import logging
+import json
 
 
-API_TOKEN = '<api_token>'
-BOT_NAME = "@<bot username>"
+CONFIG = json.load(open('config.json'))
 
-WEBHOOK_HOST = '<ip/host where the bot is running>'
-WEBHOOK_PORT = 8443
+API_TOKEN = CONFIG['api_token']
+BOT_NAME = CONFIG['@bot_name']
+
+WEBHOOK_HOST = CONFIG['webhook_host']
+WEBHOOK_PORT = CONFIG['webhook_port']
 WEBHOOK_LISTEN = '0.0.0.0'
 
 WEBHOOK_URL_BASE = "https://%s" % (WEBHOOK_HOST)
@@ -56,8 +58,8 @@ def send_help(message):
 """
 /qducc  青大CC信息
 /love  在一起
-/ip  IP DOMAIN 归属地
-eg: /ip 8.8.8.8
+/ip  IP 归属地
+eg: /ip @8.8.8.8
 /test  测试指令
 /help  获取指令详情
 """))
@@ -71,19 +73,34 @@ def send_pastdays(message):
                  ("❤️❤️❤️已经在一起"+PASTDAYS+"天"))
 
 
+@bot.message_handler(commands=['cat'])
+def send_pic(message):
+    url = 'http://thecatapi.com/api/images/get?format=src&type=jpg'
+    file = download(url)
+    bot.send_photo(message.chat.id, file) 
+
+
+@bot.message_handler(commands=['qr'])
+def qr(message):
+    text = message.text.split(' ')[1]
+    url = 'https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=' + text
+    file = download(url, type='qr')
+    bot.send_photo(message.chat.id, file)
+
+
+@bot.message_handler(commands=['whois'])
+def send_whois(message):
+    pass
+
+
 @bot.message_handler(commands=['ip'])
 def send_ip_address(message):
-    ip = re.findall(r'@(.*)', message.text)
-    if not ip:
-        bot.send_message(message.chat.id, ("输入错误，无法识别"))
-    else:
-        ip = ip[0].encode('utf-8')
-    id_adress = function.domain()
-    ret_dict = id_adress.ip_address(ip)
+    ip = message.text.split(' ')[1].encode('utf-8')
+    ret_dict = ip_address(ip)
     bot.send_message(message.chat.id,
                  ("IP: "+ip+"\n"
-                    +ret_dict['address']+"\n"
-                    +ret_dict['geoip']))
+                   +ret_dict['address']+"\n"
+                   +ret_dict['geoip']))
 
 
 @bot.message_handler(commands=['qducc'])
