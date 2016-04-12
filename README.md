@@ -1,7 +1,9 @@
 ## 关于
+
 Telegram Bot
 
 ## 安装
+
 ```
 $ pip install pyTelegramBotAPI
 $ pip install flask
@@ -9,12 +11,14 @@ $ git clone https://github.com/kyledh/telegram-bot.git
 ```
 
 ## 设置
+
 ```
 $ cd telegram-bot
 $ cp config.json.sample config.json
 ```
 
 ### config.json
+
 ```
 {
     "api_token": "53a1sc531zx53c1z83c43a84sd5s",
@@ -26,6 +30,7 @@ $ cp config.json.sample config.json
 ```
 
 ### nginx.conf
+
 必须配置 HTTPS 证书
 ```
 server
@@ -46,8 +51,7 @@ server
 ```
 
 ## 帮助
-- /qducc  QDUCC 用户信息
-- /love  ❤
+
 - /ip  查新 IP 地址
 - /cat  猫
 - /webshot  网页截图
@@ -56,14 +60,18 @@ eg: /ip 8.8.8.8
 eg: /qr g.cn.
 - /tts 文字转语音
 eg: /tts 你好
+eg: /tts en-How are you
 - /help  查看指令
 
 ## TODO
+
 - whois
 - pic
 - disqus
 - 小黄鸡
 
 ## 感谢
+
 [pyTelegramBotAPI](https://github.com/eternnoir/pyTelegramBotAPI)
+
 [python-telegram-bot](https://github.com/pAyDaAr/python-telegram-bot)

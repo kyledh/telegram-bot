@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import flask
-import personal  # This is my personal file
 from utils import *
 import telebot
 import logging
@@ -11,7 +10,7 @@ import json
 
 CONFIG = json.load(open('config.json'))
 
-BOT_NAME = CONFIG['bot_name']
+BOT_NAME = CONFIG['bot_name'].encode('utf-8')
 
 WEBHOOK_URL_BASE = "https://%s" % (CONFIG["webhook_host"])
 WEBHOOK_URL_PATH = "/%s/" % (CONFIG["api_token"])
@@ -51,8 +50,6 @@ def send_welcome(message):
 def send_help(message):
     bot.send_message(message.chat.id, (
 """
-- /qducc  QDUCC 用户信息
-- /love  ❤
 - /ip  查新 IP 地址
 - /cat  猫
 - /webshot  网页截图
@@ -61,16 +58,9 @@ eg: /ip 8.8.8.8
 eg: /qr g.cn
 - /tts 文字转语音
 eg: /tts 你好
+eg: /tts en-How are you
 - /help  查看指令
 """),  parse_mode="Markdown")
-
-
-@bot.message_handler(commands=['love'])
-def send_pastdays(message):
-    love = personal.love()
-    PASTDAYS = love.pastdays()
-    bot.send_message(message.chat.id,
-                 ("❤️❤️❤️已经在一起"+PASTDAYS+"天"))
 
 
 @bot.message_handler(commands=['cat'])
@@ -96,16 +86,6 @@ def send_ip_address(message):
                  ("IP: "+ip+"\n"
                    +ret_dict['address']+"\n"
                    +ret_dict['geoip']))
-
-
-@bot.message_handler(commands=['qducc'])
-def send_qducc(message):
-    qducc = personal.qducc()
-    ret_dict = qducc.qducc_user_info()
-    bot.send_message(message.chat.id,
-                 ("注册用户数: "+ret_dict['user_count']+"\n"
-                    +"激活用户数: "+ret_dict['user_activate_count']+"\n"
-                    +"今日活跃用户数: "+ret_dict['user_request_count']+"\n"))
 
 
 @bot.message_handler(commands=['tts'])
