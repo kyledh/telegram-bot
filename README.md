@@ -52,16 +52,12 @@ server
 
 ## 帮助
 
-- /ip  查新 IP 地址
-- /cat  猫
-- /webshot  网页截图
-eg: /ip 8.8.8.8
-- /qr 链接转二维码
-eg: /qr g.cn.
-- /tts 文字转语音
-eg: /tts 你好
-eg: /tts en-How are you
-- /help  查看指令
+- /ip 查询 IP 地址 eg: /ip 8.8.8.8
+- /cat 猫
+- /webshot 网页截图 eg: /ip google.com
+- /qr 链接转二维码 eg: /qr g.cn.
+- /tts 文字转语音 eg: /tts 你好 /tts en-How are you
+- /help 查看指令
 
 ## TODO
 
