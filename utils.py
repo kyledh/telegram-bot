@@ -7,6 +7,7 @@ import tempfile
 import re
 import urllib2
 import mimetypes
+from bs4 import BeautifulSoup
 
 
 def ip_address(ip):
@@ -16,9 +17,23 @@ def ip_address(ip):
     ret_dict['address'] = address[6:]
     geoip = re.findall(r'(GeoIP:.*?)</p>',response)[0]
     ret_dict['geoip'] = geoip
-
     return  ret_dict
 
+def whois(domain):
+    ret_dict = {}
+    response = urllib2.urlopen("http://whois.chinaz.com/" + domain).read()
+    soup = BeautifulSoup(response, "html.parser")
+    info_html = soup.find(class_="IcpMain02")
+    info_html = info_html.find("ul")
+    info = info_html.find_all('li')
+    for i in range(1, len(info)-2, 1):
+        header = info[i].find_next('div').text.strip()
+        try:
+            desc = info[i].find('span').text.strip()
+        except AttributeError:
+            desc = info[i].find_all('div')[1].text.strip()
+        ret_dict[header] = desc
+    return ret_dict
 
 def fix_extension(file_path):
     type = magic.from_file(file_path, mime=True).decode("utf-8")

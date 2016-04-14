@@ -52,9 +52,10 @@ def send_help(message):
 """
 /ip 查询 IP 地址 eg: /ip 8.8.8.8
 /cat 猫
-/webshot 网页截图 eg: /ip google.com
 /qr 链接转二维码 eg: /qr g.cn.
 /tts 文字转语音 eg: /tts 你好 /tts en-How are you
+/whois 查询whois信息  eg:/whois g.cn
+/webshot 网页截图 eg: /ip google.com
 /help 查看指令
 """),  parse_mode="Markdown")
 
@@ -93,6 +94,17 @@ def tts(message):
     params = {'lan': lan, 'ie': 'UTF-8', 'text': text}
     file = download(url,params=params)
     bot.send_voice(message.chat.id, file)
+
+
+@bot.message_handler(commands=['whois'])
+def send_whois(message):
+    domain = message.text.split(' ')[1].encode('utf-8')
+    ret_dict = whois(domain)
+    str = ''
+    for key in ret_dict:
+        str = "\n\n"  + key + ":" + ret_dict[key] + str
+    bot.send_message(message.chat.id,
+                 ("域名: "+domain+str))
 
 
 @bot.message_handler(commands=['webshot'])

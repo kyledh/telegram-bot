@@ -54,9 +54,10 @@ server
 
 - /ip 查询 IP 地址 eg: /ip 8.8.8.8
 - /cat 猫
-- /webshot 网页截图 eg: /ip google.com
 - /qr 链接转二维码 eg: /qr g.cn.
 - /tts 文字转语音 eg: /tts 你好 /tts en-How are you
+- /whois 查询whois信息  eg: /whois g.cn
+- /webshot 网页截图 eg: /ip google.com
 - /help 查看指令
 
 ## TODO
