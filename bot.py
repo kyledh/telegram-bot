@@ -50,12 +50,13 @@ def send_welcome(message):
 def send_help(message):
     bot.send_message(message.chat.id, (
 """
-/ip 查询 IP 地址 eg: /ip 8.8.8.8
 /cat 猫
 /qr 链接转二维码 eg: /qr g.cn.
-/tts 文字转语音 eg: /tts 你好 /tts en-How are you
+/ip 查询 IP 地址 eg: /ip 8.8.8.8
+/ping  ping命令 eg: /ping g.cn
 /whois 查询whois信息  eg:/whois g.cn
 /webshot 网页截图 eg: /ip google.com
+/tts 文字转语音 eg: /tts 你好 /tts en-How are you
 /help 查看指令
 """),  parse_mode="Markdown")
 
@@ -113,6 +114,13 @@ def webshot(message):
     url = 'http://api.screenshotmachine.com/?key=b645b8&size=X&url=' + text + '&format=png'
     file = download(url)
     bot.send_photo(message.chat.id, file) 
+
+
+@bot.message_handler(commands=['ping'])
+def ping(message):
+    ip = message.text.split(' ')[1].encode('utf-8')
+    info = commands.getoutput('ping '+ip+' -c 6')
+    bot.send_message(message.chat.id, info) 
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
