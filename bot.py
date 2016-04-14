@@ -6,6 +6,7 @@ from utils import *
 import telebot
 import logging
 import json
+import commands
 
 
 CONFIG = json.load(open('config.json'))
@@ -53,7 +54,7 @@ def send_help(message):
 /cat 猫
 /qr 链接转二维码 eg: /qr g.cn.
 /ip 查询 IP 地址 eg: /ip 8.8.8.8
-/ping  ping命令 eg: /ping g.cn
+/ping ping命令 eg: /ping g.cn
 /whois 查询whois信息  eg:/whois g.cn
 /webshot 网页截图 eg: /ip google.com
 /tts 文字转语音 eg: /tts 你好 /tts en-How are you
