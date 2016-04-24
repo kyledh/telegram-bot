@@ -56,7 +56,7 @@ def send_help(message):
 /ip 查询 IP 地址 eg: /ip 8.8.8.8
 /ping ping命令 eg: /ping g.cn
 /whois 查询whois信息  eg:/whois g.cn
-/webshot 网页截图 eg: /ip google.com
+/webshot 网页截图 eg: /ip g.cn
 /tts 文字转语音 eg: /tts 你好 /tts en-How are you
 /help 查看指令
 """),  parse_mode="Markdown")
@@ -126,8 +126,11 @@ def ping(message):
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
-    bot.send_message(message.chat.id, message.text)
-
+    base_url = "http://www.tuling123.com/openapi/api"
+    url = base_url + "?key=%s&info=%s&userid=%s" % (CONFIG["tuling"], message.text, message.chat.id)
+    res = urllib2.urlopen(url).read()
+    text = json.loads(res)
+    bot.send_message(message.chat.id, text["text"])
 
 bot.remove_webhook()
 
