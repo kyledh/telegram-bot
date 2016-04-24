@@ -60,12 +60,13 @@ server
 - /webshot  网页截图 eg: /ip google.com
 - /tts  文字转语音 eg: /tts 你好 /tts en-How are you
 - /help  查看指令
+- 小黄鸡接口收费，使用图灵机器人替代，回复任意信息即可
+
 
 ## TODO
 
 - pic
 - disqus
-- 小黄鸡
 
 ## 感谢
 
